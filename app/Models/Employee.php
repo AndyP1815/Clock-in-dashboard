@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $table = 'employees'; // must match DB table exactly
+    protected $table = 'employee'; // must match DB table exactly
+    public $timestamps = false;
+
 
     protected $primaryKey = 'id';
     protected $casts = [

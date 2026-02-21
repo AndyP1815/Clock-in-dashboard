@@ -22,7 +22,11 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+// In app/Models/User.php
+    public function getPreferredTimezone(): string
+    {
+        return $this->timezone ?? config('app.timezone', 'Europe/Amsterdam');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeFingerprint extends Model
 {
-    protected $table = 'employee_fingerprints';
+    protected $table = 'employee_fingerprint';
 
     public $timestamps = false;
 
