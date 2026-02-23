@@ -16,9 +16,10 @@ class EmployeesTable
             ->columns([
                 TextColumn::make('id')->label(__ ('ID')),
                 TextColumn::make('employee_id')->label(__('Employee ID')),
-                TextColumn::make('name')->label(__('Name')),
+                TextColumn::make('name')->label(__('Name'))       ->searchable(),
 
             ])
+
             ->filters([
                 //
             ])

@@ -16,7 +16,8 @@ class EmployeeForm
                 TextInput::make('name')->label(__("Name"))->required(),
                 TextInput::make('employee_id')->label(__("Employee ID"))->required(),
                 Select::make('role')->label(__("Role"))
-                    ->options(collect(Roles::cases())->pluck('name', 'value')->toArray())->required(),
+                    ->options(collect(Roles::cases())->pluck('name', 'value')->toArray())
+                    ->required()->default(Roles::Employee->value),
             ]);
     }
 }

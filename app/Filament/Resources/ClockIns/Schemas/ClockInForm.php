@@ -4,6 +4,7 @@ namespace App\Filament\Resources\ClockIns\Schemas;
 
 use App\Enums\Roles;
 use App\Enums\Status;
+use App\Models\Employee;
 use Couchbase\Role;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -17,10 +18,9 @@ class ClockInForm
             ->components([
                 Select::make('employee_id')
                     ->label(__('Employee'))
-                    ->relationship(
-                        name: 'employee',
-                        titleAttribute: 'name',
-                        modifyQueryUsing: fn ($query) => $query->where('role', Roles::Employee->value)
+                    ->options(
+                        Employee::where('role', Roles::Employee->value)
+                            ->pluck('name', 'id')
                     )
                     ->searchable()
                     ->required(),
@@ -31,6 +31,7 @@ class ClockInForm
                 ->label(__('Clock Out'))
                 ->required(),
                 Select::make('status')
+                    ->hidden()
                     ->label(__('Status'))
                     ->options(Status::class)
                     ->default('Done'),

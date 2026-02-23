@@ -33,6 +33,7 @@ class ClockInsTable
                     ->sortable()
                     ->searchable(),
             ])
+            ->defaultSort('clock_in_time', direction: 'desc')
             ->filters([
                 //
             ])
