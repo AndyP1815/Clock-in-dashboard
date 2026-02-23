@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Employees\Pages;
 
 use App\Filament\Resources\Employees\EmployeeResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
@@ -19,6 +20,9 @@ class EditEmployee extends EditRecord
     {
         return [
             DeleteAction::make(),
+            Action::make("hourReport")
+                ->label(__("Hour report"))
+                ->action(fn() => redirect($this->getResource()::getUrl("hourReport",['record' => $this->getRecord(),'month' => now()->subMonth()->format('Y-m'),]))),
         ];
     }
 }

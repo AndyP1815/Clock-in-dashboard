@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Employees;
 
 use App\Filament\Resources\Employees\Pages\CreateEmployee;
 use App\Filament\Resources\Employees\Pages\EditEmployee;
+use App\Filament\Resources\Employees\Pages\HourReport;
+use App\Filament\Resources\Employees\Pages\HourTotalReport;
 use App\Filament\Resources\Employees\Pages\ListEmployees;
 use App\Filament\Resources\Employees\Schemas\EmployeeForm;
 use App\Filament\Resources\Employees\Tables\EmployeesTable;
@@ -46,6 +48,8 @@ class EmployeeResource extends Resource
             'index' => ListEmployees::route('/'),
             'create' => CreateEmployee::route('/create'),
             'edit' => EditEmployee::route('/{record}/edit'),
+            'hourTotalReport' => HourTotalReport::route('/hour-total-report/{month?}'),
+            'hourReport' => HourReport::route('/{record}/hour-report/{month?}'),
         ];
     }
 }
