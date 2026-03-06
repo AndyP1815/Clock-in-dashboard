@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Roles;
+use App\Enums\Status;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
@@ -20,6 +21,19 @@ class Employee extends Model
         'name',
         'role'
     ];
+
+    public function hasIssues(): bool
+    {
+
+        foreach ($this->clockIns as $clockIn) {
+
+            if ($clockIn->status === Status::Failed || $clockIn->status === Status::Forgotten) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
     public function fingerprints()

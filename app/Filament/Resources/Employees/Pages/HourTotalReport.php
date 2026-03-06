@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Employees\Pages;
 
+use App\DTOs\TableDTO;
+use App\Enums\Roles;
 use App\Filament\Resources\Employees\EmployeeResource;
+use App\Helpers\ReportHelper;
+use App\Models\Employee;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
@@ -16,10 +20,27 @@ class HourTotalReport extends Page
     protected string $view = 'filament.resources.employees.pages.hour-total-report';
 
     public string $month;
+    public array $data = [];
+
+    /**
+     * @throws \Exception
+     */
     public function mount($month = null): void
     {
         $this->month = $month ?? now()->subMonth()->format('Y-m');
         $this->form->fill(['selected_month' => $this->month]);
+
+        // 1. Move the 'where' into the query builder for better performance
+        // This lets PostgreSQL do the filtering instead of PHP's memory
+        $employees = Employee::query()
+            ->where('role', Roles::Employee->value)
+            ->get();
+
+        // 2. Call the report helper
+        $dto = ReportHelper::monthlyEmployeeReport($this->month, $employees);
+
+        // 3. FIX: Use -> instead of . to call the toArray() method
+        $this->data = $dto->toArray();
     }
 
     public function form(Schema $schema): Schema

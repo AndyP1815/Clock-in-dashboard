@@ -24,12 +24,17 @@ class EmployeeResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Employee';
-
+    protected static ?int $navigationSort = 1;
     public static function form(Schema $schema): Schema
     {
         return EmployeeForm::configure($schema);
     }
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        // This "eager loads" the clock-ins so the hasIssues() method is fast
+        return parent::getEloquentQuery()->with(['clockIns']);
+    }
     public static function table(Table $table): Table
     {
         return EmployeesTable::configure($table);

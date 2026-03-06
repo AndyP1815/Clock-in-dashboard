@@ -14,10 +14,17 @@ class ListEmployees extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
             Action::make("hourReport")
-                ->label(__("Hour report"))
-                ->action(fn() => redirect($this->getResource()::getUrl("hourTotalReport"))),
+                ->label(__("Hour Report"))
+                ->icon('heroicon-m-document-chart-bar')
+                ->color('gray')
+                ->outlined()
+                ->url(fn() => $this->getResource()::getUrl("hourTotalReport")),
+
+            // Primary Action: The "Hero" of the page
+            CreateAction::make()
+                ->label(__('New Employee'))
+                ->icon('heroicon-m-user-plus'),
         ];
     }
 }

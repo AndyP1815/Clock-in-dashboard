@@ -21,7 +21,9 @@ class ClockInResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Clock In';
+    protected static ?int $navigationSort = 2;
 
+    protected static bool $shouldRegisterNavigation = false;
     public static function form(Schema $schema): Schema
     {
         return ClockInForm::configure($schema);

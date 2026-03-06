@@ -4,31 +4,46 @@ namespace App\DTOs;
 
 class TableDTO
 {
-    public array $columns = [];
-    public array $rows = [];
-    public ?array $total = null;
-
-
     /**
      * @throws \Exception
      */
-    public function __construct(array $columns, array $rows, ?array $total = null)
-    {
-        $columnCount = count($columns);
+    public function __construct(
+        public array $columns,
+        public array $rows, // Array of RowDTOs
+        public array $total = []
+    ) {
+        $columnCount = count($this->columns);
 
-        // 1. Validate Rows
-        if (isset($rows[0]) && count($rows[0]) !== $columnCount) {
-            throw new \Exception("Rows array count mismatch: expected {$columnCount} columns.");
+        if (!empty($this->rows)) {
+            $firstRow = $this->rows[0];
+
+            $actualCount = ($firstRow instanceof \App\DTOs\RowDTO)
+                ? count($firstRow->rows)
+                : count($firstRow);
+
+            if ($actualCount !== $columnCount) {
+                throw new \Exception("Rows count mismatch: expected {$columnCount} columns, found {$actualCount}.");
+            }
         }
-
-        // 2. Validate Total (if provided)
-        if ($total !== null && count($total) !== $columnCount) {
-            throw new \Exception("Total array count mismatch: expected {$columnCount} columns.");
-        }
-
-        $this->columns = $columns;
-        $this->rows = $rows;
-        $this->total = $total;
     }
 
+    /**
+     * Converts the DTO into a plain array for Livewire compatibility.
+     */
+    public function toArray(): array
+    {
+        return [
+            'columns' => $this->columns,
+            'rows' => array_map(function ($row) {
+                if ($row instanceof RowDTO) {
+                    return [
+                        'rows' => $row->rows,
+                        'url' => $row->url,
+                    ];
+                }
+                return $row;
+            }, $this->rows),
+            'total' => $this->total,
+        ];
+    }
 }

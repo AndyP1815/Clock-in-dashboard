@@ -45,10 +45,22 @@ class ClockInRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('clockIn')
             ->columns([
-                TextColumn::make('status')->label(__("Status")),
-                TextColumn::make('clock_in_time')->label(__("Clock in"))->timezone('Europe/Amsterdam')->dateTime(),
-                TextColumn::make('clock_out_time')->label(__("Clock out"))->timezone('Europe/Amsterdam')->dateTime(),
+                TextColumn::make('status')
+                    ->label(__("Status"))
+                    ->badge() // Optional: makes it look like a pill
+                    ->color(fn (Status $state): string => $state->getColor()),
+
+                TextColumn::make('clock_in_time')
+                    ->label(__("Clock in"))
+                    ->timezone('Europe/Amsterdam')
+                    ->dateTime(),
+
+                TextColumn::make('clock_out_time')
+                    ->label(__("Clock out"))
+                    ->timezone('Europe/Amsterdam')
+                    ->dateTime(),
             ])
+            ->defaultSort('clock_in_time', direction: 'desc')
             ->filters([
                 //
             ])
