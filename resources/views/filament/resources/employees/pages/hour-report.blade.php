@@ -4,7 +4,7 @@
     <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex flex-col gap-1">
             <h1 class="text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
-                {{ $this->record->name }}
+                {{ $this->record->name }} {{$this->record->last_name}}
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">
                 {{ __('Monthly hour report and breakdown') }}

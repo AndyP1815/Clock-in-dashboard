@@ -47,7 +47,7 @@ final class ReportHelper
 
         $rows = [];
 
-
+        $employees = $employees->sortBy('employee_id');
         foreach ($employees as $employee) {
             $employeeClockIns = $clockIns->get($employee->id, collect());
 
@@ -145,7 +145,7 @@ final class ReportHelper
 
             $currentDay->addDay();
         }
-
+        $rows = array_reverse($rows);
         return new TableDTO(
             ['Date', 'Time Worked'], // Only 2 columns now
             $rows,

@@ -29,15 +29,25 @@ class ClockInRelationManager extends RelationManager
                 DateTimePicker::make('clock_in_time')
                     ->label(__('Ingeklokt om'))
                     ->timezone('Europe/Amsterdam')
-                    ->required()
-            ,
+                    ->native(false) // Uses the cleaner Filament UI instead of browser default
+                    ->displayFormat('d-m-Y H:i')
+                    ->minutesStep(5) // Allows quicker selection (e.g., 05, 10, 15)
+                    ->withoutSeconds()
+                    ->prefixIcon('heroicon-m-clock')
+                    ->required(),
 
                 DateTimePicker::make('clock_out_time')
                     ->label(__('Uitgeklokt om'))
                     ->timezone('Europe/Amsterdam')
-                    ->required()
-
-            ]);
+                    ->native(false)
+                    ->displayFormat('d-m-Y H:i')
+                    ->minutesStep(5)
+                    ->withoutSeconds()
+                    ->prefixIcon('heroicon-m-arrow-right-on-rectangle')
+                    ->after('clock_in_time') // Validation: ensures out is after in
+                    ->required(),
+            ])
+            ->columns(1);
     }
 
     public function table(Table $table): Table
@@ -53,19 +63,19 @@ class ClockInRelationManager extends RelationManager
                 TextColumn::make('clock_in_time')
                     ->label(__("Ingeklokt om"))
                     ->timezone('Europe/Amsterdam')
-                    ->dateTime(),
+                    ->dateTime('d/m/Y H:i'),
 
                 TextColumn::make('clock_out_time')
                     ->label(__("Uitgeklokt om"))
                     ->timezone('Europe/Amsterdam')
-                    ->dateTime(),
+                    ->dateTime('d/m/Y H:i'),
             ])
             ->defaultSort('clock_in_time', direction: 'desc')
             ->filters([
                 //
             ])
             ->headerActions([
-                CreateAction::make(),
+                CreateAction::make()->createAnother(false),
                 //   AssociateAction::make(),
             ])
             ->recordActions([
