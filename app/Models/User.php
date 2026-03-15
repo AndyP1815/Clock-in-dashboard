@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -22,25 +23,22 @@ class User extends Authenticatable implements FilamentUser
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
-    // Filament-specific method
-    public function canAccessFilament(): bool
+    // Filament v5 requires the Panel argument
+    public function canAccessPanel(Panel $panel): bool
     {
-        // For testing, allow all users access
+        // Allow all users for now
         return true;
 
-        // Later you can replace with a role check, e.g.:
+        // Later, restrict by role, permission, or panel slug:
         // return $this->is_admin === 1;
     }
 
-    // Optional: your preferred timezone helper
+    // Optional: your preferred timezone
     public function getPreferredTimezone(): string
     {
         return $this->timezone ?? config('app.timezone', 'Europe/Amsterdam');
