@@ -17,20 +17,20 @@ class EmployeesTable
         return $table
             ->columns([
                 TextColumn::make('id')->label(__('ID')),
-                TextColumn::make('employee_id')->label(__('Employee ID')),
+                TextColumn::make('employee_id')->label(__('Medewerker ID')),
 
                 // 2. Add the Red Icon logic to the Name column
                 TextColumn::make('name')
-                    ->label(__('Name'))
+                    ->label(__('Naam'))
                     ->searchable()
                     ->icon(fn ($record) =>  $record->hasIssues() ? 'heroicon-m-exclamation-circle' : null)
                     ->iconColor('danger'),
-
-                TextColumn::make('role')->label(__('Role')),
+                TextColumn::make('last_name')->label(__('Achternaam')),
+                TextColumn::make('role')->label(__('Rol')),
             ])
             ->filters([
                 SelectFilter::make('role')
-                    ->label(__('Role'))
+                    ->label(__('Rol'))
                     ->options(Roles::class) // Filament supports Enums directly
                     ->default(Roles::Employee->value)
             ])

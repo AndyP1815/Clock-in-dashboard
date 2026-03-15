@@ -15,7 +15,7 @@ class ListEmployees extends ListRecords
     {
         return [
             Action::make("hourReport")
-                ->label(__("Hour Report"))
+                ->label(__("Uren rapport"))
                 ->icon('heroicon-m-document-chart-bar')
                 ->color('gray')
                 ->outlined()
@@ -23,7 +23,7 @@ class ListEmployees extends ListRecords
 
             // Primary Action: The "Hero" of the page
             CreateAction::make()
-                ->label(__('New Employee'))
+                ->label(__('Nieuwe medewerker'))
                 ->icon('heroicon-m-user-plus'),
         ];
     }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Employees\Pages;
 
 use App\DTOs\TableDTO;
 use App\Enums\Roles;
+use App\Exports\MonthlyEmployeeReportExport;
 use App\Filament\Resources\Employees\EmployeeResource;
 use App\Helpers\ReportHelper;
 use App\Models\Employee;
@@ -11,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Schema;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HourTotalReport extends Page
 {
@@ -48,7 +50,7 @@ class HourTotalReport extends Page
         return $schema
             ->components([
                 Select::make('selected_month')
-                    ->label(__('Select Month'))
+                    ->label(__('Geselecteerde maand'))
                     ->options($this->getMonthOptions())
                     ->statePath('month') // Connects the Select directly to your public $month property
                     ->live()
@@ -77,5 +79,25 @@ class HourTotalReport extends Page
             $date->subMonth();
         }
         return $options;
+    }
+
+    public function download(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        $employees = Employee::query()
+            ->where('role', Roles::Employee->value)
+            ->get();
+
+        $table = ReportHelper::monthlyEmployeeReport($this->month, $employees);
+
+        $rows = collect($table->rows)
+            ->map(function ($row) {
+                return $row->rows; // correct property
+            })
+            ->toArray();
+
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new MonthlyEmployeeReportExport($rows, $table->columns),
+            __('monthly_employee_report_') . $this->month . '.xlsx'
+        );
     }
 }

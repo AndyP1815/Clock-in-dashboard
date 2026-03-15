@@ -15,18 +15,18 @@ class ClockInsTable
         return $table
             ->columns([
                 TextColumn::make('employee.name')
-                    ->label(__('Employee'))
+                    ->label(__('Medewerker'))
                     ->searchable(),
                 TextColumn::make('employee.employee_id')
-                    ->label(__('Employee ID'))
+                    ->label(__('Medewerker ID'))
                     ->searchable(),
                 TextColumn::make('clock_in_time')
                     ->dateTime()
-                    ->label(__('Clock In Time'))
+                    ->label(__('Ingeklokt om'))
                     ->sortable(),
                 TextColumn::make('clock_out_time')
                     ->dateTime()
-                    ->label(__('Clock Out Time'))
+                    ->label(__('Uitgeklokt om'))
                     ->sortable(),
                 TextColumn::make('status')
                     ->label(__('Status'))

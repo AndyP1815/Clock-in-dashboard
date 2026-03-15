@@ -1,7 +1,8 @@
 <x-filament-panels::page>
 
-    {{-- Filter/Form Section --}}
-    {{-- Placing the form in its own section gives it a unified "card" look --}}
+    <x-filament::button wire:click="download">
+        Download
+    </x-filament::button>
     <x-filament::section class="mb-6">
         <div class="max-w-xl">
             {{ $this->form }}

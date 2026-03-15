@@ -43,7 +43,7 @@ class HourReport extends Page implements HasForms
         return $schema
             ->components([
                 Select::make('selected_month')
-                    ->label(__('Select Month'))
+                    ->label(__('Geselecteerde maand'))
                     ->options($this->getMonthOptions())
                     ->statePath('month') // Connects the Select directly to your public $month property
                     ->live()

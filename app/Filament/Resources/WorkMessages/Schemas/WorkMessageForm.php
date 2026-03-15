@@ -17,19 +17,21 @@ class WorkMessageForm
     {
         return $schema
             ->components([
-                TextInput::make(__('name'))
+                TextInput::make('name')
+                    ->label(__('Naam'))
                     ->required()
                     ->maxLength(100),
 
-               Textarea::make(__('message'))
+               Textarea::make('message')
+                   ->label(__('Bericht'))
                     ->required(),
 
                Toggle::make('is_end')
-                    ->label(__('End of shift message'))
+                    ->label(__('Is het een eindbericht'))
                     ->default(true),
 
                 CheckboxList::make('employees')
-                    ->label(__('employees'))
+                    ->label(__('medewerkers'))
                     ->relationship(
                         'employees',
                         'name',

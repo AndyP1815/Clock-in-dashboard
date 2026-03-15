@@ -22,7 +22,7 @@ class WorkMessageResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
     protected static ?int $navigationSort = 2;
-    protected static ?string $recordTitleAttribute = 'WorkMessage';
+    protected static ?string $recordTitleAttribute = 'Berichten';
 
     public static function form(Schema $schema): Schema
     {

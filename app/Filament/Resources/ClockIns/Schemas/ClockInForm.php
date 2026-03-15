@@ -17,7 +17,7 @@ class ClockInForm
         return $schema
             ->components([
                 Select::make('employee_id')
-                    ->label(__('Employee'))
+                    ->label(__('Medewerkers'))
                     ->options(
                         Employee::where('role', Roles::Employee->value)
                             ->pluck('name', 'id')
@@ -25,11 +25,11 @@ class ClockInForm
                     ->searchable()
                     ->required(),
                 DateTimePicker::make('clock_in_time')
-                    ->label(__('Clock In'))
+                    ->label(__('Ingeklokt om'))
                     ->required(),
                 DateTimePicker::make('clock_out_time')
-                ->label(__('Clock Out'))
-                ->required(),
+                    ->label(__('Uitgeklokt om'))
+                    ->required(),
                 Select::make('status')
                     ->hidden()
                     ->label(__('Status'))

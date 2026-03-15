@@ -27,13 +27,13 @@ class ClockInRelationManager extends RelationManager
         return $schema
             ->components([
                 DateTimePicker::make('clock_in_time')
-                    ->label(__('Clock In Time'))
+                    ->label(__('Ingeklokt om'))
                     ->timezone('Europe/Amsterdam')
                     ->required()
             ,
 
                 DateTimePicker::make('clock_out_time')
-                    ->label(__('Clock Out Time'))
+                    ->label(__('Uitgeklokt om'))
                     ->timezone('Europe/Amsterdam')
                     ->required()
 
@@ -51,12 +51,12 @@ class ClockInRelationManager extends RelationManager
                     ->color(fn (Status $state): string => $state->getColor()),
 
                 TextColumn::make('clock_in_time')
-                    ->label(__("Clock in"))
+                    ->label(__("Ingeklokt om"))
                     ->timezone('Europe/Amsterdam')
                     ->dateTime(),
 
                 TextColumn::make('clock_out_time')
-                    ->label(__("Clock out"))
+                    ->label(__("Uitgeklokt om"))
                     ->timezone('Europe/Amsterdam')
                     ->dateTime(),
             ])

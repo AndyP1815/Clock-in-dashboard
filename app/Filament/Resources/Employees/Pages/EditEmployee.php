@@ -23,7 +23,7 @@ class EditEmployee extends EditRecord
                 ->icon('heroicon-m-document-chart-bar')
                 ->color('gray')
                 ->outlined()
-                ->label(__("Hour report"))
+                ->label(__("Uren report"))
                 ->action(fn() => redirect($this->getResource()::getUrl("hourReport",['record' => $this->getRecord(),'month' => now()->subMonth()->format('Y-m'),]))),
             DeleteAction::make(),
         ];

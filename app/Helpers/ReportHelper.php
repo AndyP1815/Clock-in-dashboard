@@ -24,7 +24,7 @@ final class ReportHelper
     {
         if ($employees->isEmpty()) {
             return new TableDTO(
-                ['Employee Name', 'Days Worked', 'Total Time'],
+                [__('Medewerker ID'),__('Naam'),__('Achternaam'), __('Gewerkt uren')],__('Dagen'),
                 [] // Empty array for rows
             );
         }
@@ -83,15 +83,16 @@ final class ReportHelper
                 [
                     $employee->employee_id,
                     $employee->name,
+                    $employee->last_name,
+                    self::formatDuration($totalSeconds),
                     $daysWorked,
-                    self::formatDuration($totalSeconds)
                 ],
                 $url
             );
         }
 
         return new TableDTO(
-            ['Employee ID','Employee Name', 'Days Worked', 'Total Time (HH:MM)'],
+            [__('Medewerker ID'),__('Naam'),__('Achternaam'), __('Gewerkt uren'),__('Dagen')],
             $rows
         );
     }

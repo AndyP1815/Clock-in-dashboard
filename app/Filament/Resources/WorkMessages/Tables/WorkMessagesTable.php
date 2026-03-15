@@ -17,12 +17,15 @@ class WorkMessagesTable
         return $table
             ->columns([
                TextColumn::make('name')
+                   ->label(__('Naam'))
                     ->searchable(),
 
                 TextColumn::make('message')
+                    ->label(__('Bericht'))
                     ->limit(50),
 
               IconColumn::make('is_end')
+                  ->label(__('is eindbericht'))
                     ->boolean(),
             ])
             ->filters([
