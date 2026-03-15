@@ -15,9 +15,12 @@ class EmployeesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('employee_id')
             ->columns([
-                TextColumn::make('id')->label(__('ID')),
-                TextColumn::make('employee_id')->label(__('Medewerker ID')),
+                //TextColumn::make('id')->label(__('ID')),
+                TextColumn::make('employee_id')->label(__('Medewerker ID'))
+                    ->sortable()
+                    ,
 
                 // 2. Add the Red Icon logic to the Name column
                 TextColumn::make('name')
@@ -32,7 +35,7 @@ class EmployeesTable
                 SelectFilter::make('role')
                     ->label(__('Rol'))
                     ->options(Roles::class) // Filament supports Enums directly
-                    ->default(Roles::Employee->value)
+                    ->default(Roles::Employee->value),
             ])
             ->actions([
                 EditAction::make(),
